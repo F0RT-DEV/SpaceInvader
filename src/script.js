@@ -11,11 +11,18 @@ canvas.height = innerHeight;
 
 const player = new Player(canvas.width, canvas.height)
 
-player.draw(ctx);
+//agora estamos definindo um loop para poder renderizar a tela e conseguirmos mexer o retangulo atravez das teclas A e D
+const gameLoop = () =>{
+    player.draw(ctx);//chamando o metodo desenhar
+    requestAnimationFrame(gameLoop)//essa função chama o gameLoop 
+}
+
+gameLoop();
 
 addEventListener("keydown", (event)=>{
-    const key = event.key.toLowerCase();
+    const key = event.key.toLowerCase();//estamos definindo atravez do toLowerCase() que "a" e "A" são iguais, pois o javascript entendi que "a" e "A" não são iguais.
     
+    //estou mapeando as teclas "a" e "d" para poder movimenta
     if(key === "a"){
         player.position.x -= 20;
     }
