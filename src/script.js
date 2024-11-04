@@ -14,7 +14,7 @@ const player = new Player(canvas.width, canvas.height)
 //agora estamos definindo um loop para poder renderizar a tela e conseguirmos mexer o retangulo atravez das teclas A e D
 const gameLoop = () =>{
     player.draw(ctx);//chamando o metodo desenhar
-    requestAnimationFrame(gameLoop)//essa função chama o gameLoop 
+    requestAnimationFrame(gameLoop)//essa função chama o gameLoop  
 }
 
 gameLoop();
@@ -27,6 +27,6 @@ addEventListener("keydown", (event)=>{
         player.position.x -= 20;
     }
     if(key === "d"){
-        player.position.y += 20;
+        player.position.x += 20;
     }
 })
