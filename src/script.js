@@ -11,22 +11,44 @@ canvas.height = innerHeight;
 
 const player = new Player(canvas.width, canvas.height)
 
-//agora estamos definindo um loop para poder renderizar a tela e conseguirmos mexer o retangulo atravez das teclas A e D
-const gameLoop = () =>{
-    player.draw(ctx);//chamando o metodo desenhar
-    requestAnimationFrame(gameLoop)//essa função chama o gameLoop  
+//essa função deixa a movimentação do player mais suave
+const keys = {
+    left: false,
+    right:false,
 }
 
-gameLoop();
 
-addEventListener("keydown", (event)=>{
+//agora estamos definindo um loop para poder renderizar a tela e conseguirmos mexer o retangulo atravez das teclas A e D
+const gameLoop = () =>{
+    ctx.clearRect(0,0, canvas.width, canvas.height)//essa função limpa o rastro deixado do desenhar ao move-se
+
+    //condição para modificar a velocidade do player e player.position.x > 0 impede que o player passe da largura da tela
+    if(keys.left && player.position.x >= 0){
+        player.moveLeft()
+    }
+    if(keys.right && player.position.x <= canvas.width - player.width){
+        player.moveRight()
+    }
+
+    player.draw(ctx);//chamando o metodo desenhar
+
+    requestAnimationFrame(gameLoop)//essa função requestAnimationFrame vai dizer para o Browser chama o gameLoop em um momento adequado(que vai rodar diversas vezes)
+}
+
+addEventListener("keydown", (event)=>{//addEventListener-keydown estamos adicionando um evento quando as teclas forem precionadas
     const key = event.key.toLowerCase();//estamos definindo atravez do toLowerCase() que "a" e "A" são iguais, pois o javascript entendi que "a" e "A" não são iguais.
     
     //estou mapeando as teclas "a" e "d" para poder movimenta
-    if(key === "a"){
-        player.position.x -= 20;
-    }
-    if(key === "d"){
-        player.position.x += 20;
-    }
+    if(key === "a")keys.left = true
+    if(key === "d")keys.right= true
 })
+
+addEventListener("keyup", (event)=>{//addEventListener-keyup evento de quando as teclas forem soltas
+    const key = event.key.toLowerCase();
+    
+    if(key === "a")keys.left = false;
+    if(key === "d")keys.right= false;
+    
+})
+
+gameLoop();
