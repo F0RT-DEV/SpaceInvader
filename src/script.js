@@ -3,8 +3,10 @@ import Player from "./classes/Player.js";
 const canvas = document.querySelector("canvas");
 const ctx = canvas.getContext("2d");
 
-canvas.width = innerWidth; //aqui voce esta determinando que o canvas vai ocupa toda a largura da tela
+canvas.width = innerWidth;//aqui voce esta determinando que o canvas vai ocupa toda a largura da tela
 canvas.height = innerHeight;
+
+ctx.imageSmoothingEnabled = false
 
 //ctx.fillStyle = "red";estou definindo o estilo do preenchimento sendo a cor vermelha
 //ctx.fillRect(0,0,100,100) aqui vamos definir em desenho preenchido(no caso ele ira receber o preenchimento definido no fillStyle)
@@ -34,6 +36,7 @@ const gameLoop = () =>{
 
     requestAnimationFrame(gameLoop)//essa função requestAnimationFrame vai dizer para o Browser chama o gameLoop em um momento adequado(que vai rodar diversas vezes)
 }
+
 
 addEventListener("keydown", (event)=>{//addEventListener-keydown estamos adicionando um evento quando as teclas forem precionadas
     const key = event.key.toLowerCase();//estamos definindo atravez do toLowerCase() que "a" e "A" são iguais, pois o javascript entendi que "a" e "A" não são iguais.
