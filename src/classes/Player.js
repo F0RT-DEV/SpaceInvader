@@ -1,7 +1,8 @@
 import { 
     path_spaceship_image,
     path_engine_image,
-    path_engine_sprites
+    path_engine_sprites,
+    initial_frames
  } from "../utils/constants.js";
 
 class Player {
@@ -20,6 +21,9 @@ class Player {
         this.image = this.loadImage(path_spaceship_image);
         this.engineImage = this.loadImage(path_engine_image);
         this.engineSprites = this.loadImage(path_engine_sprites);
+
+        this.sx = 0;
+        this.framesCounter = initial_frames;
     }
 
     loadImage(path) {
@@ -50,20 +54,30 @@ class Player {
                 this.height
             )
             ctx.drawImage(
-                this.engineImage, 
+                this.engineSprites, 
+                this.sx,0,
+                48,48,
                 this.position.x, 
-                this.position.y, 
+                this.position.y + 10, 
                 this.width, 
                 this.height
             )
             ctx.drawImage(
-                this.engineSprites, 
+                this.engineImage, 
                 this.position.x, 
-                this.position.y, 
+                this.position.y + 8, 
                 this.width, 
                 this.height
-            )
+            ) 
         }
+        this.update();
+    }
+    update(){
+        if(this.framesCounter === 0){
+            this.sx = this.sx === 96 ? 0 : this.sx + 48;
+            this.framesCounter = initial_frames;
+        }
+        this.framesCounter--;
     }
 }
 

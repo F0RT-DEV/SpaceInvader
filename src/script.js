@@ -24,16 +24,31 @@ const keys = {
 const gameLoop = () =>{
     ctx.clearRect(0,0, canvas.width, canvas.height)//essa função limpa o rastro deixado do desenhar ao move-se
 
+    ctx.save();
+
+    ctx.translate(
+        player.position.x + player.width /2,
+        player.position.y + player.width /2
+    );
+
     //condição para modificar a velocidade do player e player.position.x > 0 impede que o player passe da largura da tela
     if(keys.left && player.position.x >= 0){
-        player.moveLeft()
+        player.moveLeft();
+        ctx.rotate(-0.15)
     }
     if(keys.right && player.position.x <= canvas.width - player.width){
         player.moveRight()
+        ctx.rotate(0.15)
     }
+
+    ctx.translate(
+        - player.position.x - player.width /2,
+        - player.position.y - player.width /2
+    );
 
     player.draw(ctx);//chamando o metodo desenhar
 
+    ctx.restore();
     requestAnimationFrame(gameLoop)//essa função requestAnimationFrame vai dizer para o Browser chama o gameLoop em um momento adequado(que vai rodar diversas vezes)
 }
 
