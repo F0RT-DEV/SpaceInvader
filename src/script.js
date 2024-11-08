@@ -1,4 +1,5 @@
 import Player from "./classes/Player.js";
+import Projectile from "./classes/Projectile.js";
 
 const canvas = document.querySelector("canvas");
 const ctx = canvas.getContext("2d");
@@ -12,11 +13,16 @@ ctx.imageSmoothingEnabled = false
 //ctx.fillRect(0,0,100,100) aqui vamos definir em desenho preenchido(no caso ele ira receber o preenchimento definido no fillStyle)
 
 const player = new Player(canvas.width, canvas.height)
+//const p = new Projectile({x: 958, y: 700}, -5)
 
 //essa função deixa a movimentação do player mais suave
 const keys = {
     left: false,
     right:false,
+    shoot: {
+        pressed: false,
+        released: true
+    }
 }
 
 
@@ -30,6 +36,11 @@ const gameLoop = () =>{
         player.position.x + player.width /2,
         player.position.y + player.width /2
     );
+
+    if(keys.shoot.pressed && keys.shoot.released){
+        console.log("shoot")
+        keys.shoot.released = false
+    }
 
     //condição para modificar a velocidade do player e player.position.x > 0 impede que o player passe da largura da tela
     if(keys.left && player.position.x >= 0){
@@ -65,8 +76,18 @@ addEventListener("keyup", (event)=>{//addEventListener-keyup evento de quando as
     const key = event.key.toLowerCase();
     
     if(key === "a")keys.left = false;
-    if(key === "d")keys.right= false;
-    
+    if(key === "d")keys.right= false;  
 })
+
+// Evento para o clique do mouse - botão pressionado
+addEventListener("mousedown", () => {
+    keys.shoot.pressed = true;
+});
+
+// Evento para o clique do mouse - botão solto
+addEventListener("mouseup", () => {
+    keys.shoot.pressed = false;
+    keys.shoot.released = true;
+});
 
 gameLoop();
