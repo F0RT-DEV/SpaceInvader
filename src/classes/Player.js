@@ -4,6 +4,7 @@ import {
     path_engine_sprites,
     initial_frames
  } from "../utils/constants.js";
+import Projectile from "./Projectile.js";
 
 class Player {
     constructor(canvasWidth, canvasHeight) {
@@ -79,6 +80,15 @@ class Player {
         }
         this.framesCounter--;
     }
+
+    shoot(projectiles) {
+        const p = new Projectile({
+                x: this.position.x + this.width / 2,
+                y: this.position.y
+            }, -5
+        );
+        projectiles.push(p);
+    }    
 }
 
 export default Player;

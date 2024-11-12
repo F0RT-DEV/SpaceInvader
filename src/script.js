@@ -13,6 +13,7 @@ ctx.imageSmoothingEnabled = false
 //ctx.fillRect(0,0,100,100) aqui vamos definir em desenho preenchido(no caso ele ira receber o preenchimento definido no fillStyle)
 
 const player = new Player(canvas.width, canvas.height)
+const playerProjectile = []
 //const p = new Projectile({x: 958, y: 700}, -5)
 
 //essa função deixa a movimentação do player mais suave
@@ -25,6 +26,9 @@ const keys = {
     }
 }
 
+const drawProjectile = ()=> {
+    
+}
 
 //agora estamos definindo um loop para poder renderizar a tela e conseguirmos mexer o retangulo atravez das teclas A e D
 const gameLoop = () =>{
@@ -38,8 +42,9 @@ const gameLoop = () =>{
     );
 
     if(keys.shoot.pressed && keys.shoot.released){
-        console.log("shoot")
+        player.shoot(playerProjectile)
         keys.shoot.released = false
+        console.log(playerProjectile)
     }
 
     //condição para modificar a velocidade do player e player.position.x > 0 impede que o player passe da largura da tela
